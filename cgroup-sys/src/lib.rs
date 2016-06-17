@@ -1,8 +1,5 @@
-extern crate libc;
-use libc::{c_int, c_void, c_char};
+use std::os::raw::{c_int, c_void, c_char};
 use std::mem;
-
-const FILENAME_MAX: usize = libc::FILENAME_MAX as usize;
 
 pub type Handle = *const c_void;
 
@@ -12,7 +9,7 @@ pub const ECGEOF: c_int = 50023;
 #[repr(C)]
 #[derive(Copy)]
 pub struct controller_data {
-    pub name: [c_char; FILENAME_MAX],
+    pub name: [c_char; 4096usize],
     pub hierarchy: c_int,
     pub num_cgroups: c_int,
     pub enabled: c_int,
@@ -69,7 +66,7 @@ fn test_init() {
                      CStr::from_ptr(cgroup_strerror(ret)).to_string_lossy().into_owned());
         }
 
-        ret = cgroup_get_all_controller_end(&h as *const *const libc::c_void);
+        ret = cgroup_get_all_controller_end(&h as *const *const c_void);
         if ret != 0 {
             println!("{}",
                      CStr::from_ptr(cgroup_strerror(ret)).to_string_lossy().into_owned());

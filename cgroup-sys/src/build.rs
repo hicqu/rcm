@@ -1,5 +1,3 @@
-extern crate gcc;
-
 use std::env;
 
 fn main() {
