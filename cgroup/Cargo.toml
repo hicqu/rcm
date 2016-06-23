@@ -2,6 +2,9 @@
 name = "cgroup"
 version = "0.1.0"
 authors = ["Jimmi Dyson <jimmidyson@gmail.com>"]
+license = "MIT OR Apache-2.0"
+description = "libcgroup bindings"
+repository = "https://github.com/jimmidyson/rust-cgroup"
 
 [dependencies]
 cgroup-sys = { path = "../cgroup-sys", version = "0.1.0"}
