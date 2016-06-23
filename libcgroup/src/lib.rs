@@ -1,4 +1,4 @@
-extern crate cgroup_sys as ffi;
+extern crate libcgroup_sys as ffi;
 
 use std::ffi::{CStr, CString};
 use std::ptr;
