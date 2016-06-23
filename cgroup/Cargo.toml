@@ -1,0 +1,7 @@
+[package]
+name = "cgroup"
+version = "0.1.0"
+authors = ["Jimmi Dyson <jimmidyson@gmail.com>"]
+
+[dependencies]
+cgroup-sys = { path = "../cgroup-sys", version = "0.1.0"}

@@ -4,6 +4,7 @@ use std::mem;
 
 #[allow(dead_code)]
 pub const ECGEOF: c_int = 50023;
+pub const ECGFAIL: c_int = 50013;
 pub const FILENAME_MAX: usize = 4096;
 pub const CG_VALUE_MAX: usize = 100;
 
