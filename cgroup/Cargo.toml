@@ -7,4 +7,4 @@ description = "libcgroup bindings"
 repository = "https://github.com/jimmidyson/rust-cgroup"
 
 [dependencies]
-cgroup-sys = { path = "../cgroup-sys", version = "0.1.0"}
+cgroup-sys = { path = "../cgroup-sys", version = "0.1.1"}
