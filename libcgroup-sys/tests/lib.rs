@@ -1,10 +1,12 @@
-extern crate cgroup_sys;
-use cgroup_sys::*;
+extern crate libcgroup_sys;
+use libcgroup_sys::*;
 
 extern crate libc;
 use libc::{c_void, c_char};
 
 use std::ffi::{CStr, CString};
+
+extern crate procinfo;
 
 #[test]
 fn test_init() {
@@ -54,7 +56,9 @@ fn test_cgroup_get_current_controller_path() {
 
         let mut current_path = 0 as *mut c_char;
 
-        let ret = cgroup_get_current_controller_path(13036,
+        let stat = procinfo::pid::stat_self().unwrap();
+
+        let ret = cgroup_get_current_controller_path(stat.pid,
                                                      CString::new("memory").unwrap().as_ptr(),
                                                      &mut current_path as *mut *mut c_char);
         if ret != 0 {

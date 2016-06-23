@@ -1,5 +1,5 @@
-extern crate cgroup;
-use cgroup::*;
+extern crate libcgroup;
+use libcgroup::*;
 
 #[test]
 fn test_create_cgroup() {

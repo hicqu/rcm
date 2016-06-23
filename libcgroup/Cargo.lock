@@ -1,19 +1,19 @@
 [root]
-name = "cgroup"
+name = "libcgroup"
 version = "0.1.0"
 dependencies = [
- "cgroup-sys 0.1.0",
-]
-
-[[package]]
-name = "cgroup-sys"
-version = "0.1.0"
-dependencies = [
- "libc 0.2.12 (registry+https://github.com/rust-lang/crates.io-index)",
+ "libcgroup-sys 0.1.1",
 ]
 
 [[package]]
 name = "libc"
 version = "0.2.12"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "libcgroup-sys"
+version = "0.1.1"
+dependencies = [
+ "libc 0.2.12 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
