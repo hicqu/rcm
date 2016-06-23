@@ -1,10 +1,10 @@
 [package]
-name = "cgroup-sys"
+name = "libcgroup-sys"
 version = "0.1.1"
 authors = ["Jimmi Dyson <jimmidyson@gmail.com>"]
 license = "MIT OR Apache-2.0"
 description = "FFI bindings to libcgroup"
-repository = "https://github.com/jimmidyson/rust-cgroup"
+repository = "https://github.com/jimmidyson/rust-libcgroup"
 
 build = "build.rs"
 
