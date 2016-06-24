@@ -33,13 +33,15 @@ pub struct CGroup {
 }
 
 impl CGroup {
-    pub fn new(name: String) -> Result<CGroup> {
+    pub fn new<S>(name: S) -> Result<CGroup>
+        where S: Into<String>
+    {
         C_LIB_INITIALIZED.call_once(|| {
             unsafe {
                 ffi::cgroup_init();
             }
         });
-        let cg = unsafe { ffi::cgroup_new_cgroup(CString::new(name).unwrap().as_ptr()) };
+        let cg = unsafe { ffi::cgroup_new_cgroup(CString::new(name.into()).unwrap().as_ptr()) };
         if cg.is_null() {
             check_return(ffi::ECGFAIL, CGroup { cgroup: ptr::null() })
         } else {
@@ -52,15 +54,17 @@ impl CGroup {
         check_return(ret, self)
     }
 
-    pub fn add_controller(&self, controller: String) -> Result<*const CGroup> {
+    pub fn add_controller<S>(&self, controller: S) -> Result<*const CGroup>
+        where S: Into<String>
+    {
         let ctrlr = unsafe {
-            ffi::cgroup_add_controller(self.cgroup, CString::new(controller).unwrap().as_ptr())
+            ffi::cgroup_add_controller(self.cgroup,
+                                       CString::new(controller.into()).unwrap().as_ptr())
         };
         if ctrlr.is_null() {
-            check_return(ffi::ECGFAIL, self)
-        } else {
-            Ok(self)
+            return check_return(ffi::ECGFAIL, self);
         }
+        Ok(self)
     }
 }
 

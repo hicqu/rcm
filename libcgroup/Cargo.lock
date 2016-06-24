@@ -1,8 +1,8 @@
 [root]
 name = "libcgroup"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
- "libcgroup-sys 0.1.1",
+ "libcgroup-sys 0.2.0",
 ]
 
 [[package]]
@@ -12,7 +12,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "libcgroup-sys"
-version = "0.1.1"
+version = "0.2.0"
 dependencies = [
  "libc 0.2.12 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
