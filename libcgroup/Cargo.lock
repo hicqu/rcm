@@ -2,6 +2,7 @@
 name = "libcgroup"
 version = "0.2.0"
 dependencies = [
+ "libc 0.2.12 (registry+https://github.com/rust-lang/crates.io-index)",
  "libcgroup-sys 0.2.0",
 ]
 

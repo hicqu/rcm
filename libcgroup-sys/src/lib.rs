@@ -2,9 +2,10 @@ extern crate libc;
 use libc::{c_int, c_void, c_char, pid_t, uid_t, gid_t, mode_t, int64_t, uint64_t};
 use std::mem;
 
-#[allow(dead_code)]
 pub const ECGEOF: c_int = 50023;
 pub const ECGFAIL: c_int = 50013;
+pub const ECGROUPNOTEQUAL: c_int = 50017;
+pub const ECGCONTROLLERNOTEQUAL: c_int = 50018;
 pub const FILENAME_MAX: usize = 4096;
 pub const CG_VALUE_MAX: usize = 100;
 
@@ -77,7 +78,7 @@ extern "C" {
     // init.h
     pub fn cgroup_init() -> c_int;
     pub fn cgroup_get_subsys_mount_point(controller: *const c_char,
-                                         mount_point: *mut *mut c_char)
+                                         mount_point: *const *const c_char)
                                          -> c_int;
 
     // iterators.h
@@ -137,10 +138,10 @@ extern "C" {
     pub fn cgroup_new_cgroup(name: *const c_char) -> *mut cgroup;
     pub fn cgroup_add_controller(cgroup: *const cgroup,
                                  name: *const c_char)
-                                 -> *mut cgroup_controller;
+                                 -> *const cgroup_controller;
     pub fn cgroup_get_controller(cgroup: *const cgroup,
                                  name: *const c_char)
-                                 -> *mut cgroup_controller;
+                                 -> *const cgroup_controller;
     pub fn cgroup_free(cgroup: *const *const cgroup);
     pub fn cgroup_free_controllers(cgroup: *const cgroup);
     pub fn cgroup_create_cgroup(cgroup: *const cgroup, ignore_ownership: c_int) -> c_int;
@@ -242,7 +243,7 @@ extern "C" {
     pub fn cgroup_attach_task_pid(cgroup: *const cgroup, tid: pid_t) -> c_int;
     pub fn cgroup_get_current_controller_path(pid: pid_t,
                                               controller: *const c_char,
-                                              current_path: *mut *mut c_char)
+                                              current_path: *const *const c_char)
                                               -> c_int;
 
     // config.h

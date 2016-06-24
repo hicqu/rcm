@@ -18,7 +18,7 @@ fn test_init() {
 #[test]
 fn test_iterate_all_controllers() {
     let mut controllers = Default::default();
-    let h = 0 as *const c_void;
+    let h: *const c_void = std::ptr::null();
 
     unsafe {
         cgroup_init();
@@ -54,13 +54,13 @@ fn test_cgroup_get_current_controller_path() {
     unsafe {
         cgroup_init();
 
-        let mut current_path = 0 as *mut c_char;
+        let current_path: *const c_char = std::ptr::null();
 
         let stat = procinfo::pid::stat_self().unwrap();
 
         let ret = cgroup_get_current_controller_path(stat.pid,
                                                      CString::new("memory").unwrap().as_ptr(),
-                                                     &mut current_path as *mut *mut c_char);
+                                                     &current_path as *const *const c_char);
         if ret != 0 {
             println!("{}",
                      CStr::from_ptr(cgroup_strerror(ret)).to_string_lossy().into_owned());
