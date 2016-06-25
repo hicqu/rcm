@@ -1,32 +1,15 @@
+pub use self::result::{CGroupError, Result};
+use self::result::check_return;
+mod result;
+pub use self::iter::*;
+mod iter;
+use self::init::init;
+mod init;
+
 extern crate libcgroup_sys as ffi;
 extern crate libc;
 
 use std::ffi::{CStr, CString};
-use std::result;
-use std::sync::{Once, ONCE_INIT};
-
-static C_LIB_INITIALIZED: Once = ONCE_INIT;
-
-pub struct CGroupError {
-    pub code: i32,
-    pub description: String,
-}
-
-pub type Result<T> = result::Result<T, CGroupError>;
-
-fn check_return<T>(ret: i32, val: T) -> Result<T> {
-    match ret {
-        0 => Ok(val),
-        _ => {
-            let desc =
-                unsafe { CStr::from_ptr(ffi::cgroup_strerror(ret)).to_string_lossy().into_owned() };
-            Err(CGroupError {
-                code: ret,
-                description: desc,
-            })
-        }
-    }
-}
 
 pub struct CGroup {
     cgroup: *const ffi::cgroup,
@@ -67,11 +50,7 @@ impl CGroup {
     pub fn new<S>(name: S) -> Result<CGroup>
         where S: Into<String>
     {
-        C_LIB_INITIALIZED.call_once(|| {
-            unsafe {
-                ffi::cgroup_init();
-            }
-        });
+        init();
         let cg = CGroup {
             cgroup: unsafe { ffi::cgroup_new_cgroup(CString::new(name.into()).unwrap().as_ptr()) },
         };

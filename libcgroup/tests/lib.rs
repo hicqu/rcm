@@ -73,3 +73,18 @@ fn test_get_values() {
     };
     assert!(slim.len() > 0);
 }
+
+#[test]
+fn iterate_cgroup_mount_points() {
+    let mut found = false;
+    for c in cgroup_mount_points() {
+        found = match c {
+            Ok(mp) => {
+                println!("{}: {}", mp.controller_name, mp.path);
+                true
+            }
+            Err(err) => panic!("{}", err.description),
+        }
+    }
+    assert!(found);
+}
