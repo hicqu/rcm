@@ -10,4 +10,6 @@ matrix:
   allow_failures:
     - rust: nightly
 
-script: cargo test --verbose --features=sudo
+script:
+  - cd libcgroup-sys && cargo test --verbose --features=sudo
+  - cd libcgroup && sudo cargo test --verbose --features=sudo
