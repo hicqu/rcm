@@ -15,4 +15,4 @@ before_install:
 
 script:
   - (cd libcgroup-sys && cargo test --verbose)
-  - (cd libcgroup && sudo cargo test --verbose --features=sudo)
+  - (cd libcgroup && sudo env PATH=$PATH cargo test --verbose --features=sudo)
