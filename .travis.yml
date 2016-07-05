@@ -43,7 +43,7 @@ script:
 
 after_success:
   - (cd libcgroup && travis-cargo --only stable doc-upload)
-  - (cd libcgroup && sudo env PATH=$PATH TRAVIS_JOB_ID=$TRAVIS_JOB_ID travis-cargo coveralls --no-link-dead-code --kcov-options="--include-path=./libcgroup")
+  - (cd libcgroup && sudo env PATH=$PATH TRAVIS_JOB_ID=$TRAVIS_JOB_ID travis-cargo coveralls --no-link-dead-code)
 
 env:
   global:
