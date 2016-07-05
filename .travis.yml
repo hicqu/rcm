@@ -43,7 +43,7 @@ script:
 
 after_success:
   - (cd libcgroup && travis-cargo --only stable doc-upload)
-  - (cd libcgroup && travis-cargo coveralls --no-sudo --verify)
+  - (cd libcgroup && travis-cargo coveralls --no-link-dead-code --no-sudo --verify)
 
 env:
   global:
