@@ -3,6 +3,7 @@ extern crate libcgroup_sys as ffi;
 use std;
 use std::ffi::CStr;
 
+#[derive(Debug)]
 pub struct CGroupError {
     pub code: i32,
     pub description: String,

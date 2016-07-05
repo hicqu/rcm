@@ -15,12 +15,12 @@ fn test_manipulate_cgroup() {
     };
 
     match ctrlr.add_value_uint64("memory.limit_in_bytes", 409666u64) {
-        Ok(_) => println!("Working!"),
+        Ok(c) => c,
         Err(err) => println!("{}", err.description),
     };
 
     match cg.create() {
-        Ok(_) => println!("Working!"),
+        Ok(m) => m,
         Err(err) => panic!("{}", err.description),
     };
 
@@ -28,10 +28,11 @@ fn test_manipulate_cgroup() {
         Ok(m) => m,
         Err(err) => panic!("{}", err.description),
     };
-    assert!(lim > 0);
+    println!("{}", lim);
+    assert!(lim == 409666u64);
 
     match cg.delete() {
-        Ok(_) => println!("Working!"),
+        Ok(c) => c,
         Err(err) => panic!("{}", err.description),
     };
 }
@@ -77,14 +78,20 @@ fn test_get_values() {
 #[test]
 fn iterate_cgroup_mount_points() {
     let mut found = false;
-    for c in cgroup_mount_points() {
+    for c in cgroup_mount_points_iter() {
         found = match c {
-            Ok(mp) => {
-                println!("{}: {}", mp.controller_name, mp.path);
-                true
-            }
+            Ok(_) => true,
             Err(err) => panic!("{}", err.description),
         }
     }
     assert!(found);
+}
+
+#[test]
+fn test_cgroup_mount_points() {
+    let v = match cgroup_mount_points() {
+        Ok(mps) => mps,
+        Err(err) => panic!("{}", err.description),
+    };
+    assert!(v.len() > 0);
 }

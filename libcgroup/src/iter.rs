@@ -6,7 +6,9 @@ extern crate libc;
 
 use std;
 use std::ffi::CStr;
+use std::vec::Vec;
 
+#[derive(Debug)]
 pub struct CGroupMount {
     pub controller_name: String,
     pub path: String,
@@ -69,6 +71,18 @@ impl Iterator for CGroupMountIter {
     }
 }
 
-pub fn cgroup_mount_points() -> CGroupMountIter {
+pub fn cgroup_mount_points_iter() -> CGroupMountIter {
     CGroupMountIter::new()
+}
+
+pub fn cgroup_mount_points() -> Result<Vec<CGroupMount>> {
+    let mut vec = Vec::new();
+    for c in cgroup_mount_points_iter() {
+        let mp = match c {
+            Ok(m) => m,
+            Err(err) => return Err(err),
+        };
+        vec.push(mp);
+    }
+    Ok(vec)
 }
