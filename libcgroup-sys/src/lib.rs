@@ -1,5 +1,5 @@
 extern crate libc;
-use libc::{c_int, c_void, c_char, pid_t, uid_t, gid_t, mode_t, int64_t, uint64_t};
+use libc::{c_int, c_short, c_void, c_char, pid_t, uid_t, gid_t, mode_t, int64_t, uint64_t};
 use std::mem;
 
 pub const ECGEOF: c_int = 50023;
@@ -28,6 +28,7 @@ impl Clone for controller_data {
         *self
     }
 }
+
 impl Default for controller_data {
     fn default() -> Self {
         unsafe { mem::zeroed() }
@@ -46,6 +47,7 @@ impl Clone for cgroup_stat {
         *self
     }
 }
+
 impl Default for cgroup_stat {
     fn default() -> Self {
         unsafe { mem::zeroed() }
@@ -64,7 +66,41 @@ impl Clone for cgroup_mount_point {
         *self
     }
 }
+
 impl Default for cgroup_mount_point {
+    fn default() -> Self {
+        unsafe { mem::zeroed() }
+    }
+}
+
+#[allow(non_camel_case_types)]
+#[repr(C)]
+#[derive(Copy,Clone)]
+pub enum group_walk_type {
+    CGROUP_WALK_TYPE_PRE_DIR = 0x1,
+    CGROUP_WALK_TYPE_POST_DIR = 0x2,
+}
+
+#[allow(non_camel_case_types)]
+#[repr(C)]
+#[derive(Copy,Clone)]
+pub enum cgroup_file_type {
+    CGROUP_FILE_TYPE_FILE,
+    CGROUP_FILE_TYPE_DIR,
+    CGROUP_FILE_TYPE_OTHER,
+}
+
+#[repr(C)]
+#[derive(Copy,Clone)]
+pub struct cgroup_file_info {
+    pub file_type: cgroup_file_type,
+    pub path: *const c_char,
+    pub parent: *const c_char,
+    pub full_path: *const c_char,
+    pub depth: c_short,
+}
+
+impl Default for cgroup_file_info {
     fn default() -> Self {
         unsafe { mem::zeroed() }
     }
@@ -82,6 +118,21 @@ extern "C" {
                                          -> c_int;
 
     // iterators.h
+    pub fn cgroup_walk_tree_begin(controller: *const c_char,
+                                  base_path: *const c_char,
+                                  depth: c_int,
+                                  handle: *const *const c_void,
+                                  info: *mut cgroup_file_info,
+                                  base_level: *const c_int)
+                                  -> c_int;
+    pub fn cgroup_walk_tree_next(depth: c_int,
+                                 handle: *const *const c_void,
+                                 info: *mut cgroup_file_info,
+                                 base_level: c_int)
+                                 -> c_int;
+    pub fn cgroup_walk_tree_end(handle: *const *const c_void) -> c_int;
+    pub fn cgroup_walk_tree_set_flags(handle: *const *const c_void, flags: c_int) -> c_int;
+
     pub fn cgroup_read_value_begin(controller: *const c_char,
                                    path: *const c_char,
                                    name: *mut c_char,
