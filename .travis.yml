@@ -1,14 +1,15 @@
 sudo: required
 dist: trusty
 
+branches:
+  only: 
+    - master
+
 language: rust
 rust:
   - stable
   - beta
   - nightly
-matrix:
-  allow_failures:
-    - rust: nightly
 
 addons:
   apt:
@@ -36,7 +37,7 @@ script:
       (
       cd libcgroup &&
       travis-cargo build &&
-      sudo env PATH=$PATH travis-cargo test -- --features=sudo &&
+      sudo env PATH=$PATH TRAVIS_CARGO_NIGHTLY_FEATURE=$TRAVIS_CARGO_NIGHTLY_FEATURE travis-cargo test -- --features=sudo &&
       travis-cargo bench &&
       travis-cargo --only stable doc
       )
