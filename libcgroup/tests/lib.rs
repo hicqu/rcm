@@ -95,3 +95,18 @@ fn test_cgroup_mount_points() {
     };
     assert!(v.len() > 0);
 }
+
+#[test]
+fn iterate_cgroup_tree() {
+    let mut found = false;
+    for c in cgroup_walk_tree_iter("memory") {
+        found = match c {
+            Ok(fi) => {
+                println!("{:?}", fi);
+                true
+            }
+            Err(err) => panic!("{}", err.description),
+        }
+    }
+    assert!(found);
+}

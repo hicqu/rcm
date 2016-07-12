@@ -3,7 +3,7 @@ use self::result::check_return;
 mod result;
 pub use self::iter::*;
 mod iter;
-use self::init::init;
+pub use self::init::init;
 mod init;
 
 extern crate libcgroup_sys as ffi;
