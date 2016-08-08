@@ -4,7 +4,7 @@ version = "0.2.0"
 authors = ["Jimmi Dyson <jimmidyson@gmail.com>"]
 license = "MIT OR Apache-2.0"
 description = "FFI bindings to libcgroup"
-repository = "https://github.com/jimmidyson/rust-libcgroup"
+repository = "https://github.com/jimmidyson/rcm"
 
 build = "build.rs"
 
