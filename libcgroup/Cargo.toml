@@ -4,7 +4,7 @@ version = "0.2.0"
 authors = ["Jimmi Dyson <jimmidyson@gmail.com>"]
 license = "MIT OR Apache-2.0"
 description = "libcgroup bindings"
-repository = "https://github.com/jimmidyson/rust-libcgroup"
+repository = "https://github.com/jimmidyson/rcm"
 
 [features]
 # No dependencies, only used to run tests that require sudo.
