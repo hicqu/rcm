@@ -39,6 +39,7 @@ script:
       )
   - |
       (
+      cd libcgroup &&
       travis-cargo build &&
       sudo env PATH=$PATH TRAVIS_CARGO_NIGHTLY_FEATURE=$TRAVIS_CARGO_NIGHTLY_FEATURE travis-cargo test -- --features=sudo &&
       travis-cargo bench &&
@@ -47,7 +48,7 @@ script:
 
 after_success:
   - travis-cargo --only stable doc-upload
-  - sudo env PATH=$PATH TRAVIS_JOB_ID=$TRAVIS_JOB_ID travis-cargo coveralls --no-link-dead-code
+  - (cd libcgroup && sudo env PATH=$PATH TRAVIS_JOB_ID=$TRAVIS_JOB_ID travis-cargo coveralls --no-link-dead-code)
 
 env:
   global:
