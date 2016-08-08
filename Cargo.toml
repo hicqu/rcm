@@ -6,10 +6,15 @@ license = "MIT OR Apache-2.0"
 description = "libcgroup bindings"
 repository = "https://github.com/jimmidyson/rust-libcgroup"
 
+[workspace]
+members = [
+  "libcgroup-sys",
+]
+
 [features]
 # No dependencies, only used to run tests that require sudo.
 sudo = []
 
 [dependencies]
 libc = "0.2"
-libcgroup-sys = { path = "../libcgroup-sys", version = "0.2.0"}
+libcgroup-sys = { path = "libcgroup-sys", version = "0.2"}

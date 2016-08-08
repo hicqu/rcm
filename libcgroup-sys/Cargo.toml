@@ -12,4 +12,4 @@ build = "build.rs"
 libc = "0.2"
 
 [dev-dependencies]
-procinfo = "0.2.1"
+procinfo = "0.2"
