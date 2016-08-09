@@ -14,4 +14,4 @@ members = [
 
 [dependencies]
 log = "0.3"
-libcgroup = { path = "libcgroup" }
+libcgroup = { path = "libcgroup", version = "0.2"}
