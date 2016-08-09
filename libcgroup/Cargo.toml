@@ -1,6 +1,6 @@
 [package]
 name = "libcgroup"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Jimmi Dyson <jimmidyson@gmail.com>"]
 license = "MIT OR Apache-2.0"
 description = "libcgroup bindings"
