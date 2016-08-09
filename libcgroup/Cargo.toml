@@ -12,4 +12,4 @@ sudo = []
 
 [dependencies]
 libc = "0.2"
-libcgroup-sys = { path = "../libcgroup-sys", version = "0.2"}
+libcgroup-sys = { path = "../libcgroup-sys", version = "0.3"}
