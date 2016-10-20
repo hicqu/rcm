@@ -29,7 +29,7 @@ script:
       (
       cd libcgroup-sys &&
       travis-cargo build &&
-      travis-cargo test &&
+      travis-cargo TRAVIS_CARGO_NIGHTLY_FEATURE="$TRAVIS_CARGO_NIGHTLY_FEATURE" test &&
       travis-cargo bench &&
       travis-cargo --only stable doc
       )
@@ -37,7 +37,7 @@ script:
       (
       cd libcgroup &&
       travis-cargo build &&
-      sudo env PATH=$PATH TRAVIS_CARGO_NIGHTLY_FEATURE=$TRAVIS_CARGO_NIGHTLY_FEATURE travis-cargo test -- --features=sudo &&
+      sudo env PATH=$PATH TRAVIS_CARGO_NIGHTLY_FEATURE="$TRAVIS_CARGO_NIGHTLY_FEATURE" travis-cargo test -- --features=sudo &&
       travis-cargo bench &&
       travis-cargo --only stable doc
       )

@@ -9,6 +9,7 @@ repository = "https://github.com/jimmidyson/rcm"
 [features]
 # No dependencies, only used to run tests that require sudo.
 sudo = []
+nightly = []
 
 [dependencies]
 libc = "0.2"
