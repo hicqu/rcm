@@ -6,6 +6,7 @@ use libc::{c_void, c_char};
 
 use std::ffi::{CStr, CString};
 
+#![recursion_limit = "1024"]
 extern crate procinfo;
 
 #[test]
