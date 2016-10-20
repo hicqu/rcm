@@ -6,8 +6,6 @@ use libc::{c_void, c_char};
 
 use std::ffi::{CStr, CString};
 
-extern crate procinfo;
-
 #[test]
 fn test_init() {
     unsafe {
@@ -49,7 +47,11 @@ fn test_iterate_all_controllers() {
     }
 }
 
+#[cfg(feature = "nightly")]
+extern crate procinfo;
+
 #[test]
+#[cfg(feature = "nightly")]
 fn test_cgroup_get_current_controller_path() {
     unsafe {
         cgroup_init();

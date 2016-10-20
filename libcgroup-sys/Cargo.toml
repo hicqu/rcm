@@ -8,8 +8,10 @@ repository = "https://github.com/jimmidyson/rcm"
 
 build = "build.rs"
 
+[features]
+# No dependencies, only used to run tests that require nightly rust.
+nightly = ["procinfo"]
+
 [dependencies]
 libc = "0.2"
-
-[dev-dependencies]
-procinfo = "0.2"
+procinfo = { version = "0.2", optional = true }

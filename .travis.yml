@@ -11,10 +11,6 @@ rust:
   - beta
   - nightly
 
-matrix:
-  allow_failures:
-    - rust: nightly
-
 addons:
   apt:
     packages:
@@ -48,9 +44,9 @@ script:
 
 after_success:
   - travis-cargo --only stable doc-upload
-  - (cd libcgroup && sudo env PATH=$PATH TRAVIS_JOB_ID=$TRAVIS_JOB_ID travis-cargo coveralls --no-link-dead-code)
+  - (cd libcgroup && sudo env PATH=$PATH TRAVIS_JOB_ID=$TRAVIS_JOB_ID travis-cargo coveralls --no-link-dead-code --verify)
 
 env:
   global:
-    - TRAVIS_CARGO_NIGHTLY_FEATURE=""
+    - TRAVIS_CARGO_NIGHTLY_FEATURE="nightly"
     - secure: "VzabtQjGz5Pd+p3PcpOZnjJQJSkiYtDPnxgekg0D3y9UkMf7E97hbWpEINPb0ttqHwv9F/1t1r+ys9jeCgC3AGBQ0AtWWq4pC76Ez8PaZRbzM2d/WtS4KQ5aSDHekU96pbSyfIbOEJMI8SKUz1AHDiBQiIn/XILYNhoiViRBDk5eyXWJe2n3LHBGAV7M7OZj1oNgZcX30HnFrnYH53d2tzjfvvHCCM865ng0Sg8iUEyhYo7p6t6l4mwHprz1f8l+vTnwPt+uohiGdGRRbWIbqufzhwXb09CrxCUmVQ0JyioHrHdsUzf24mdZY7fUYaxGzCv5o62+HLm7DLWOg3d12OQY7lzLZ1CDxk2scBa9DMg/5xVOmuGf8ldmooIUTf/uQeS+LSrHADAx/D8Ngt7de8op1cnSwNlZr0TgdYzQRdBnI6keBwpkTg2TWf1NKfjPSljN9fMEdgctuIRlL+D30QtkKRnajMQGOMtBhZ8BZAmUkceSlgjqS6HcEnRlBXElBCUmlZi4KQaSHBqJKN95cV259dxjbl5FNKQ8hyvl+kCFKy8HmGVqmosy1YrKYgz1ynqPrcpjXXW65RN8HXZ9BSebRdjhCr0EN60WimYEG+hiUTlEGlLKZ/Jwa8dZc1dFH4A1Eb8xzFRfjo3spzyqkZpCvwtnA/Saza5zDKOHE/o="
