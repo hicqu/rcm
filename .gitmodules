@@ -1,0 +1,4 @@
+[submodule "libcgroup-sys/libcgroup"]
+	path = libcgroup-sys/libcgroup
+	url = https://github.com/hicqu/libcgroup
+	branch = release-2.0-update-submodule-tests

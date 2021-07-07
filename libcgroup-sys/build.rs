@@ -1,24 +1,40 @@
-use std::env;
+use std::path::Path;
+use std::process::Command;
 
 fn main() {
-    // CGROUP_LINKAGE (dylib, static, framework) is used to specify how
-    // to link against libtls (see rustc-link-lib) - default is dylib
-    let mode = env::var("CGROUP_LINKAGE").unwrap_or_else(|_| "dylib".to_owned());
-
-    // If available use the paths in LIBTLS_LIBRARY_PATH to search for libraries.
-    if let Ok(e_libpath) = env::var("CGROUP_LIBRARY_PATH") {
-        for path in env::split_paths(&e_libpath) {
-            println!("cargo:rustc-link-search=native={}", &path.to_string_lossy());
-        }
+    let status = Command::new("./bootstrap.sh")
+        .current_dir("libcgroup")
+        .spawn()
+        .and_then(|mut c| c.wait())
+        .unwrap();
+    if !status.success() {
+        panic!("bootstrap.sh fails");
     }
 
-    if let Ok(e_libs) = env::var("CGROUP_LIBS") {
-        // Link against the libraries in CGROUP_LIBS, multiple
-        // libraries can specified, separated by semicolon(;)
-        for lib in e_libs.split(';') {
-            println!("cargo:rustc-link-lib={}={}", mode, lib);
-        }
-    } else {
-        println!("cargo:rustc-link-lib={}=cgroup", mode);
+    let status = Command::new("./configure")
+        .args(&["--disable-pam"])
+        .current_dir("libcgroup")
+        .spawn()
+        .and_then(|mut c| c.wait())
+        .unwrap();
+    if !status.success() {
+        panic!("configure fails");
     }
+
+    let status = Command::new("make")
+        .current_dir("libcgroup")
+        .spawn()
+        .and_then(|mut c| c.wait())
+        .unwrap();
+    if !status.success() {
+        panic!("make fails");
+    }
+
+    let out_dir = Path::new("libcgroup/src/.libs").canonicalize().unwrap();
+    println!(
+        "cargo:rustc-link-search=native={}",
+        out_dir.to_str().unwrap()
+    );
+    println!("cargo:rustc-link-lib=static=cgroup");
+    println!("cargo:rerun-if-changed=libcgroup/src");
 }
