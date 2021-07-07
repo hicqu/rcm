@@ -267,22 +267,22 @@ extern "C" {
     pub fn cgroup_get_value_string(
         controller: *const cgroup_controller,
         name: *const c_char,
-        value: *const *const c_char,
+        value: *mut *const c_char,
     ) -> c_int;
     pub fn cgroup_get_value_int64(
         controller: *const cgroup_controller,
         name: *const c_char,
-        value: *const i64,
+        value: *mut i64,
     ) -> c_int;
     pub fn cgroup_get_value_uint64(
         controller: *const cgroup_controller,
         name: *const c_char,
-        value: *const u64,
+        value: *mut u64,
     ) -> c_int;
     pub fn cgroup_get_value_bool(
         controller: *const cgroup_controller,
         name: *const c_char,
-        value: *const bool,
+        value: *mut bool,
     ) -> c_int;
     pub fn cgroup_set_value_string(
         controller: *const cgroup_controller,
